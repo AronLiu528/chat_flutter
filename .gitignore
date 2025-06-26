@@ -1,0 +1,98 @@
+# ────────── 通用忽略 ──────────
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+Thumbs.db
+migrate_working_dir/
+
+# ────────── IDE 設定檔 ──────────
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+
+# ────────── Flutter/Dart ──────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+
+# ────────── iOS ──────────
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
+ios/.symlinks/
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/ServiceDefinitions.json
+ios/profile
+ios/Icon?
+ios/xcuserdata/
+ios/Runner/GeneratedPluginRegistrant.*
+ios/**/dgph
+ios/*.mode1v3
+ios/*.mode2v3
+ios/*.moved-aside
+ios/*.pbxuser
+ios/*.perspectivev3
+ios/**/*sync/
+ios/.sconsign.dblite
+ios/.tags*
+ios/**/.vagrant/
+ios/**/DerivedData/
+ios/**/.generated/
+ios/**/UserInterfaceState.xcuserstate
+
+# ────────── Android ──────────
+.gradle/
+captures/
+android/.gradle/
+android/local.properties
+android/gradlew
+android/gradlew.bat
+android/gradle/wrapper/gradle-wrapper.jar
+android/key.properties
+android/**/*.keystore
+android/**/*.jks
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/**/GeneratedPluginRegistrant.java
+
+# ────────── Firebase（敏感設定檔）──────────
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
+.firebaserc
+.firebase/
+firebase.json
+
+# ────────── dotenv（若有使用）──────────
+.env
+.env.*
+
+# ────────── Windows/Linux/macOS build（若支援）──────────
+windows/build/
+linux/build/
+macos/Pods/
+
+# ────────── Symbolication / Obfuscation ──────────
+app.*.symbols
+app.*.map.json
