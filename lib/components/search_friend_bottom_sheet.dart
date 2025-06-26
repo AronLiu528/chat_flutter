@@ -1,3 +1,4 @@
+import 'package:chat_flutter/utils/app_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../models/chat_user.dart';
@@ -79,6 +80,7 @@ class _SearchFriendBottomSheetState extends State<SearchFriendBottomSheet> {
                   child: RadioListTile(
                     value: 'id',
                     groupValue: _searchType,
+                    activeColor: AppTheme.primaryColor,
                     contentPadding: EdgeInsets.zero,
                     title: const Text('ID'),
                     onChanged: (value) {
@@ -95,6 +97,7 @@ class _SearchFriendBottomSheetState extends State<SearchFriendBottomSheet> {
                   width: 100,
                   child: RadioListTile(
                     value: 'email',
+                    activeColor: AppTheme.primaryColor,
                     groupValue: _searchType,
                     contentPadding: EdgeInsets.zero,
                     title: const Text('Email'),
@@ -116,7 +119,7 @@ class _SearchFriendBottomSheetState extends State<SearchFriendBottomSheet> {
               height: 50,
               margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: AppTheme.inputBgColor,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: TextField(
@@ -180,22 +183,17 @@ class _SearchFriendBottomSheetState extends State<SearchFriendBottomSheet> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // 背景色
-                        foregroundColor: Colors.black, // 文字顏色
-                        side: const BorderSide(color: Colors.black),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        elevation: 0,
-                      ),
+                      style: AppTheme.elevatedButtonStyle,
                       onPressed: () {
                         if (_foundUser != null) {
                           FirebaseService.addFriend(_foundUser!);
                         }
                         Navigator.pop(context);
                       },
-                      child: const Text('加入'),
+                      child: const Text(
+                        '加入',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     )
                   ],
                 ),

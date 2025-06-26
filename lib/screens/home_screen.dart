@@ -2,6 +2,7 @@ import 'package:chat_flutter/components/user_card.dart';
 import 'package:chat_flutter/screens/chat_screen.dart';
 import 'package:chat_flutter/screens/loading_screen.dart';
 import 'package:chat_flutter/screens/setting_screen.dart';
+import 'package:chat_flutter/utils/app_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../components/bottom_sheet/add_friend.dart';
@@ -45,36 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          '好友',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: false,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.person_add_alt_1,
-              color: Colors.black,
-            ),
-            onPressed: _showBottomSheet,
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingScreen(user: currentUser),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: _appBarWidget(context),
       body: Column(
         children: [
           _searchBarWidget(),
@@ -86,12 +58,45 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  PreferredSizeWidget _appBarWidget(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      title: const Text(
+        '好友',
+        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+      ),
+      centerTitle: false,
+      actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.person_add_alt_outlined,
+            color: Colors.black,
+          ),
+          onPressed: _showBottomSheet,
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.settings_outlined,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SettingScreen(user: currentUser),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   Widget _searchBarWidget() {
     return Container(
       height: 40,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.grey[300],
+        color: AppTheme.inputBgColor,
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
