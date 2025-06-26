@@ -121,192 +121,197 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-                width: 400,
-                child: Image.asset('assets/icons/app_icon.png'),
+              _logoWidget(),
+              _loginOrRegisterWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _logoWidget() {
+    return Container(
+      margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
+      width: 400,
+      child: Image.asset('assets/icons/app_icon.png'),
+    );
+  }
+
+  Widget _loginOrRegisterWidget() {
+    return Container(
+      margin: const EdgeInsets.all(20),
+      decoration: AppTheme.cardDecoration,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _form,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!_isLogin)
+                UserImagePicker(
+                  onPickImage: (pickedImage) {
+                    _selectedImage = pickedImage;
+                  },
+                ),
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: AppTheme.textFieldDecoration(
+                  hintText: '帳號/信箱',
+                ).copyWith(
+                  prefixIcon: const Icon(
+                    Icons.email,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
+                keyboardType: TextInputType.emailAddress,
+                autocorrect: false,
+                textCapitalization: TextCapitalization.none,
+                validator: (value) {
+                  if (value == null || value.isEmpty || !value.contains('@')) {
+                    return '請輸入有效的 email 地址';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _enteredEmail = value!;
+                },
               ),
-              // const SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.all(20),
-                decoration: AppTheme.cardDecoration,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Form(
-                    key: _form,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (!_isLogin)
-                          UserImagePicker(
-                            onPickImage: (pickedImage) {
-                              _selectedImage = pickedImage;
-                            },
-                          ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          decoration: AppTheme.textFieldDecoration(
-                            hintText: '帳號/信箱',
-                          ).copyWith(
-                            prefixIcon: const Icon(
-                              Icons.email,
-                              color: AppTheme.primaryColor,
-                            ),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          autocorrect: false,
-                          textCapitalization: TextCapitalization.none,
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                !value.contains('@')) {
-                              return '請輸入有效的 email 地址';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _enteredEmail = value!;
-                          },
-                        ),
-                        const SizedBox(height: 12),
-                        if (!_isLogin) ...[
-                          TextFormField(
-                            decoration: AppTheme.textFieldDecoration(
-                              hintText: '使用者名稱',
-                            ).copyWith(
-                              prefixIcon: const Icon(
-                                Icons.person,
-                                color: AppTheme.primaryColor,
-                              ),
-                            ),
-                            enableSuggestions: false,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  value.trim().length < 2) {
-                                return '用戶名至少需要2個字元';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _enteredUsername = value!;
-                            },
-                          ),
-                          const SizedBox(height: 12),
-                        ],
-                        TextFormField(
-                          decoration: AppTheme.textFieldDecoration(
-                            hintText: '密碼',
-                          ).copyWith(
-                            prefixIcon: const Icon(
-                              Icons.lock,
-                              color: AppTheme.primaryColor,
-                            ),
-                          ),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                value.trim().length < 6) {
-                              return '密碼長度至少需要6個字元';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _enteredPassword = value!;
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: AppTheme.elevatedButtonStyle,
-                            onPressed: _submit,
-                            child: Text(
-                              _isLogin ? '登入' : '註冊',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              _isLogin = !_isLogin;
-                            });
-                          },
-                          child: Text(
-                            _isLogin ? '建立新帳號' : '已有帳號？登入',
-                            style: const TextStyle(
-                              color: AppTheme.primaryColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        if (_isLogin) ...[
-                          const SizedBox(height: 20),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 1,
-                                  color: AppTheme.textLightColor,
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  '或',
-                                  style: TextStyle(
-                                    color: AppTheme.textSecondaryColor,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  height: 1,
-                                  color: AppTheme.textLightColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          OutlinedButton.icon(
-                            icon: Image.asset(
-                              'assets/icons/google.png',
-                              height: 24,
-                            ),
-                            label: const Text(
-                              '使用 Google 帳號登入',
-                              style: TextStyle(
-                                color: AppTheme.textPrimaryColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 12,
-                              ),
-                              side: const BorderSide(
-                                color: AppTheme.textLightColor,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            onPressed: _googleSignIn,
-                          ),
-                        ],
-                      ],
+              const SizedBox(height: 12),
+              if (!_isLogin) ...[
+                TextFormField(
+                  decoration: AppTheme.textFieldDecoration(
+                    hintText: '使用者名稱',
+                  ).copyWith(
+                    prefixIcon: const Icon(
+                      Icons.person,
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
+                  enableSuggestions: false,
+                  validator: (value) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        value.trim().length < 2) {
+                      return '用戶名至少需要2個字元';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _enteredUsername = value!;
+                  },
+                ),
+                const SizedBox(height: 12),
+              ],
+              TextFormField(
+                decoration: AppTheme.textFieldDecoration(
+                  hintText: '密碼',
+                ).copyWith(
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.trim().length < 6) {
+                    return '密碼長度至少需要6個字元';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _enteredPassword = value!;
+                },
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: AppTheme.elevatedButtonStyle,
+                  onPressed: _submit,
+                  child: Text(
+                    _isLogin ? '登入' : '註冊',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isLogin = !_isLogin;
+                  });
+                },
+                child: Text(
+                  _isLogin ? '建立新帳號' : '已有帳號？登入',
+                  style: const TextStyle(
+                    color: AppTheme.primaryColor,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              if (_isLogin) ...[
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        color: AppTheme.textLightColor,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        '或',
+                        style: TextStyle(
+                          color: AppTheme.textSecondaryColor,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        color: AppTheme.textLightColor,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                OutlinedButton.icon(
+                  icon: Image.asset(
+                    'assets/icons/google.png',
+                    height: 24,
+                  ),
+                  label: const Text(
+                    '使用 Google 帳號登入',
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryColor,
+                      fontSize: 14,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                    side: const BorderSide(
+                      color: AppTheme.textLightColor,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  onPressed: _googleSignIn,
+                ),
+              ],
             ],
           ),
         ),

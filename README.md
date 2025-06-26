@@ -30,7 +30,6 @@
 ### 前端技術
 - **Flutter 3.x** - 跨平台 UI 框架
 - **Dart** - 程式語言
-- **Material Design** - UI 設計系統
 
 ### 後端服務
 - **Firebase Authentication** - 用戶認證
